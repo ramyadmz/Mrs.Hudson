@@ -25,6 +25,7 @@ class Home extends React.Component {
     metaData: false,
   };
   fetchTasks() {
+    this.setState({isLoading: true})
     fetch('http://34.78.202.51:8888/tasks')
       .then((response) => response.json())
       .then((json) => {
@@ -65,9 +66,8 @@ class Home extends React.Component {
       <Container>
         <Header style={styles.header}>
           <Left style={{marginHorizontal: 10}}>
-            <Button backgroundColor="#350245">
-              <Icon name="check"></Icon>
-              <Text style={styles.NavLink}>Refresh</Text>
+            <Button backgroundColor="#350245" onPress={()=>this.fetchTasks()}>
+              <Icon name="refresh" ></Icon>
             </Button>
           </Left>
           <Right>
@@ -104,9 +104,11 @@ class Home extends React.Component {
           </View>
           <View style={styles.ListSection}>
             <View>
+            
               {this.state.isLoading ? (
-                <ActivityIndicator />
+                <ActivityIndicator size="large" color="#350245"/>
               ) : (
+                
                 <FlatList
                   refreshing={true}
                   extraData={this.state.metaData}
