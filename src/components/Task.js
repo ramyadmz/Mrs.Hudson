@@ -32,6 +32,7 @@ class Task extends React.Component {
               checked={this.props.checked}
               color="green"
               checkboxTickColor="gray"
+              
               onPress={() => this.toggleChecked(this.props.id,this.props.task,this.props.checked)}
               style={styles.checkbox}
               
@@ -62,8 +63,8 @@ const styles = StyleSheet.create({
   taskLabel: {
     fontFamily: 'Handlee-Regular',
     color: '#000',
-    padding: 5,
-    fontSize: 16,
+    paddingLeft: 5,
+    fontSize: 20,
   },
 });
 export default Task;

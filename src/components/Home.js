@@ -9,7 +9,7 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import {Container, Header, Right, Left, Button} from 'native-base';
+import {Container, Header, Right, Left, Button, Icon} from 'native-base';
 import Task from './Task';
 
 class Home extends React.Component {
@@ -65,18 +65,24 @@ class Home extends React.Component {
       <Container>
         <Header style={styles.header}>
           <Left style={{marginHorizontal: 10}}>
-            <Button>
-              <Text style={styles.NavLink}>Home</Text>
+            <Button backgroundColor="#350245">
+              <Icon name="check"></Icon>
+              <Text style={styles.NavLink}>Refresh</Text>
             </Button>
           </Left>
           <Right>
-            <Button>
+            <Button backgroundColor="#350245">
               <Text style={styles.NavLink}>Login</Text>
             </Button>
           </Right>
         </Header>
         <View style={styles.content}>
-          <View style={styles.LogoSection}></View>
+          <View style={styles.LogoSection}>
+            <Image
+              style={styles.logo}
+              source={require('./../../assets/images/Logo.jpg')}
+            />
+          </View>
           <View style={styles.AddSection}>
             <TextInput
               placeholder="What needs to be done?"
@@ -126,21 +132,25 @@ class Home extends React.Component {
 }
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: 'darkgray',
+    backgroundColor: '#350245',
+
+    
   },
   NavLink: {
     fontFamily: 'Handlee-Regular',
-    fontSize: 18,
+    fontSize: 22,
     color: 'ivory',
   },
   content: {
+    paddingTop:10,
     fontFamily: 'Handlee-Regular',
     flex: 1,
     alignItems: 'center',
     flexDirection: 'column',
+    backgroundColor: '#dcd9c8',
   },
 
-  LogoSection: {},
+  logo: {},
   AddSection: {
     fontFamily: 'Handlee-Regular',
     alignItems: 'flex-start',
@@ -172,10 +182,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Handlee-Regular',
     flexDirection: 'column',
     backgroundColor: '#F7F8F8',
-    width: 400,
+    width: '95%',
+    flex:1,
     padding: 10,
     margin: 10,
-    borderWidth: 0.5,
+    borderWidth: 0.8,
     borderStyle: 'solid',
   },
 });
