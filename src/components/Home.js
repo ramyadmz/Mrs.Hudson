@@ -21,6 +21,51 @@ import {
     Icon,
   } from 'native-base';
 class Home extends React.Component {
+    state = {
+        data: [],
+        isLoading: true,
+        currentTask: '',
+        showLastLTask: false,
+        metaData: false,
+      };
+      fetchTasks() {
+    
+        fetch('http://34.78.202.51:8888/tasks')
+          .then((response) => response.json())
+          .then((json) => {
+            this.setState({data: json.tasks});
+          })
+          .catch((error) => console.error(error))
+          .finally(() => {
+            this.setState({isLoading: false});
+          });
+      }
+      componentDidMount() {
+        this.fetchTasks();
+      }
+      addTask() {
+        if (this.state.currentTask.length != 0) {
+          const text = this.state.currentTask;
+          this.setState({currentTask: ''});
+    
+          fetch('http://34.78.202.51:8888/tasks', {
+            method: 'post',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              task: text,
+              checked: false,
+              deleted:false,
+              star:false,
+              
+            }),
+          })
+            .then(() => this.fetchTasks())
+            .then(() => this.setState({isLoading: true}));
+        }
+      }
   render() {
     return (
       <Container>
@@ -32,7 +77,7 @@ class Home extends React.Component {
           </Left>
           <Right>
             <Button>
-              <Text>Login</Text>
+              <Text style={styles.NavLink}>Login</Text>
             </Button>
           </Right>
         </Header>
@@ -42,12 +87,37 @@ class Home extends React.Component {
             <TextInput
               placeholder="What needs to be done?"
               placeholderTextColor="gray"
-              style={styles.textInput}></TextInput>
-            <TouchableOpacity>
+              style={styles.textInput}
+              onChangeText={(text) => {
+                this.setState({currentTask: text});
+              }}
+              onSubmitEditing={(e) => {
+                this.addTask();
+              }}
+              value={this.state.currentTask}></TextInput>
+            <TouchableOpacity onPress={() => {
+                    this.addTask();
+                  }}>
               <Text style={styles.addBtn}>ADD</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.ListSection}></View>
+          <View style={styles.ListSection}>
+          <View>
+                  {this.state.isLoading ? (
+                    <ActivityIndicator />
+                  ) : (
+                    <FlatList
+                      refreshing={true}
+                      extraData={this.state.metaData}
+                      inverted={true}
+                      data={this.state.data}
+                      renderItem={({item, index}) => (
+                        <Text>{index}-{item.task}</Text>
+                      )}
+                    />
+                  )}
+                </View>
+          </View>
         </View>
       </Container>
     );
