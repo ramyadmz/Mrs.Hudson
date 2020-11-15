@@ -67,7 +67,7 @@ class Home extends React.Component {
         <Header style={styles.header}>
           <Left>
             <Button backgroundColor="#350245">
-            <Icon  style={styles.NavIcon} name="log-in"></Icon>
+            <Icon  style={styles.NavIcon} name="home"></Icon>
             </Button>
           </Left>
           <Right>
@@ -117,6 +117,7 @@ class Home extends React.Component {
                       task={item.task}
                       checked={item.checked}
                       star={item.star}
+                      deleted={item.deleted}
                       id={index}
                       fetchAgain={this.fetchTasks}
                     />
@@ -134,17 +135,9 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#350245',
   },
-  NavLink: {
-    fontFamily: 'Handlee-Regular',
-    fontSize: 22,
-    color: 'ivory',
-    
-  },
   NavIcon: {
-    
     fontSize: 25,
     color: 'ivory',
-    right: 0
   },
   content: {
     paddingTop: 10,
