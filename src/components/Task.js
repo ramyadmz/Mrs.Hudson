@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text,TouchableOpacity,} from 'react-native';
 import {CheckBox, ListItem, Button} from 'native-base';
-import {Rating} from 'react-native-elements';
+import {Rating,Card} from 'react-native-elements';
 class Task extends React.Component {
   constructor(props) {
     super(props);
@@ -58,7 +58,7 @@ class Task extends React.Component {
   render() {
     if (this.props.task && !this.props.deleted) {
       return (
-        <View style={styles.checkboxContainer}>
+        <Card containerStyle={{padding: 0,margin:5,borderRadius: 10,backgroundColor: '#F7F8F8',}}>
           <ListItem style={{borderColor: 'rgb(243, 171, 51)'}}>
             <Rating
               type="custom"
@@ -104,7 +104,7 @@ class Task extends React.Component {
                 );
               }} ><Text style={styles.Delete}>X</Text></TouchableOpacity>
           </ListItem>
-        </View>
+        </Card>
       );
     } else {
       return <></>;

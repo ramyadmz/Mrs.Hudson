@@ -9,7 +9,7 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import {Container, Header, Right, Left, Button, Icon} from 'native-base';
+import {Container, Header, Right,Body,Title, Left, Button, Icon} from 'native-base';
 import Task from './Task';
 
 class Home extends React.Component {
@@ -65,13 +65,16 @@ class Home extends React.Component {
     return (
       <Container>
         <Header style={styles.header}>
-          <Left>
-            <Button backgroundColor="#350245">
+          <Left style={{flex:1}}>
+            <Button hasText transparent backgroundColor="#350245">
             <Icon  style={styles.NavIcon} name="home"></Icon>
             </Button>
           </Left>
-          <Right>
-            <Button backgroundColor="#350245" onPress={() => this.fetchTasks()}>
+          <Body style={{flex:1}}>
+            <Title style={styles.headerTitle}>Mrs.Hudson</Title>
+          </Body>
+          <Right style={{flex:1}}>
+            <Button hasText transparent backgroundColor="#350245" onPress={() => this.fetchTasks()}>
               <Icon  style={styles.NavIcon} name="refresh"></Icon>
             </Button>
           </Right>
@@ -135,6 +138,12 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#350245',
   },
+  headerTitle:{
+    fontFamily: 'HomemadeApple-Regular',
+    fontSize:24,
+    color:'gold'
+
+  },
   NavIcon: {
     fontSize: 25,
     color: 'ivory',
@@ -147,8 +156,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#dcd9c8',
   },
-
-  logo: {},
   AddSection: {
     fontFamily: 'Handlee-Regular',
     alignItems: 'flex-start',
@@ -177,15 +184,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   ListSection: {
-    fontFamily: 'Handlee-Regular',
     flexDirection: 'column',
-    backgroundColor: '#F7F8F8',
     width: '95%',
     flex: 1,
-    padding: 10,
-    margin: 10,
-    borderWidth: 0.8,
-    borderStyle: 'solid',
   },
 });
 export default Home;
