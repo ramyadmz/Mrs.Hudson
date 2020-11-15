@@ -25,7 +25,7 @@ class Home extends React.Component {
     metaData: false,
   };
   fetchTasks() {
-    this.setState({isLoading: true})
+    this.setState({isLoading: true});
     fetch('http://34.78.202.51:8888/tasks')
       .then((response) => response.json())
       .then((json) => {
@@ -65,14 +65,14 @@ class Home extends React.Component {
     return (
       <Container>
         <Header style={styles.header}>
-          <Left style={{marginHorizontal: 10}}>
-            <Button backgroundColor="#350245" onPress={()=>this.fetchTasks()}>
-              <Icon name="refresh" ></Icon>
+          <Left>
+            <Button backgroundColor="#350245">
+            <Icon  style={styles.NavIcon} name="log-in"></Icon>
             </Button>
           </Left>
           <Right>
-            <Button backgroundColor="#350245">
-              <Text style={styles.NavLink}>Login</Text>
+            <Button backgroundColor="#350245" onPress={() => this.fetchTasks()}>
+              <Icon  style={styles.NavIcon} name="refresh"></Icon>
             </Button>
           </Right>
         </Header>
@@ -99,16 +99,14 @@ class Home extends React.Component {
               onPress={() => {
                 this.addTask();
               }}>
-              <Text style={styles.addBtn}>ADD</Text>
+                <Icon  style={styles.addBtn} name="add"></Icon>
             </TouchableOpacity>
           </View>
           <View style={styles.ListSection}>
             <View>
-            
               {this.state.isLoading ? (
-                <ActivityIndicator size="large" color="#350245"/>
+                <ActivityIndicator size="large" color="#350245" />
               ) : (
-                
                 <FlatList
                   refreshing={true}
                   extraData={this.state.metaData}
@@ -135,16 +133,21 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#350245',
-
-    
   },
   NavLink: {
     fontFamily: 'Handlee-Regular',
     fontSize: 22,
     color: 'ivory',
+    
+  },
+  NavIcon: {
+    
+    fontSize: 25,
+    color: 'ivory',
+    right: 0
   },
   content: {
-    paddingTop:10,
+    paddingTop: 10,
     fontFamily: 'Handlee-Regular',
     flex: 1,
     alignItems: 'center',
@@ -176,7 +179,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 8,
     color: 'ivory',
-    backgroundColor: 'darkgreen',
+    backgroundColor: '#31d068',
     borderRadius: 4,
     fontSize: 20,
   },
@@ -185,7 +188,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#F7F8F8',
     width: '95%',
-    flex:1,
+    flex: 1,
     padding: 10,
     margin: 10,
     borderWidth: 0.8,

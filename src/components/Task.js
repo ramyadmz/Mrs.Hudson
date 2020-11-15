@@ -30,7 +30,7 @@ class Task extends React.Component {
             <CheckBox
               title={this.props.task}
               checked={this.props.checked}
-              color="green"
+              color="#31d068"
               checkboxTickColor="gray"
               
               onPress={() => this.toggleChecked(this.props.id,this.props.task,this.props.checked)}
