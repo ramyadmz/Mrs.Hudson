@@ -6,6 +6,7 @@ class Task extends React.Component {
   constructor(props) {
     super(props);
   }
+  
 
   toggleChecked(index, task, checked, star, deleted) {
     fetch('http://34.78.202.51:8888/tasks/' + index, {
@@ -92,7 +93,7 @@ class Task extends React.Component {
               }
               style={styles.checkbox}
             />
-            <Text style={styles.Label}>{this.props.task}</Text>
+            <Text style={[styles.Label , this.props.checked ?  styles.checked : '' ,]}>{this.props.task}</Text>
             <TouchableOpacity
               onPress={() => {
                 this.deleteTask(
@@ -120,10 +121,18 @@ const styles = StyleSheet.create({
   Label: {
     flex:1,
     fontFamily: 'Handlee-Regular',
-    color: '#000',
+    color: 'rgba(0, 0, 0, 0.80)',
     paddingLeft: 5,
     fontSize: 20,
   },
+  checked:{
+    textDecorationLine:"line-through",
+    color:'gray',
+    textShadowColor: 'rgba(0, 0, 0, 0.35)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10
+  },
+  
   rating:{
     backgroundColor: '#F7F8F8',
 
