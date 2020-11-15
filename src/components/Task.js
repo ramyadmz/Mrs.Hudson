@@ -48,16 +48,19 @@ class Task extends React.Component {
 }
 const styles = StyleSheet.create({
   checkbox: {
+    fontFamily: 'Handlee-Regular',
     alignSelf: 'center',
     marginLeft: 5,
   },
   taskIndex: {
+    fontFamily: 'Handlee-Regular',
     color: '#000',
     paddingRight: 15,
     fontSize: 16,
     borderRightWidth: 1,
   },
   taskLabel: {
+    fontFamily: 'Handlee-Regular',
     color: '#000',
     padding: 5,
     fontSize: 16,

@@ -129,10 +129,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'darkgray',
   },
   NavLink: {
+    fontFamily: 'Handlee-Regular',
     fontSize: 18,
     color: 'ivory',
   },
   content: {
+    fontFamily: 'Handlee-Regular',
     flex: 1,
     alignItems: 'center',
     flexDirection: 'column',
@@ -140,12 +142,14 @@ const styles = StyleSheet.create({
 
   LogoSection: {},
   AddSection: {
+    fontFamily: 'Handlee-Regular',
     alignItems: 'flex-start',
     flexDirection: 'row',
     alignContent: 'center',
     marginTop: 10,
   },
   textInput: {
+    fontFamily: 'Handlee-Regular',
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: 'gray',
@@ -156,6 +160,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   addBtn: {
+    fontFamily: 'Handlee-Regular',
     margin: 5,
     padding: 8,
     color: 'ivory',
@@ -164,6 +169,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   ListSection: {
+    fontFamily: 'Handlee-Regular',
     flexDirection: 'column',
     backgroundColor: '#F7F8F8',
     width: 400,
