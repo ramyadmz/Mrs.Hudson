@@ -1,14 +1,13 @@
 import React from 'react';
-import {StyleSheet, View, Text,TouchableOpacity,} from 'react-native';
-import {CheckBox, ListItem, Button} from 'native-base';
+import {StyleSheet, Text,TouchableOpacity,} from 'react-native';
+import {CheckBox, ListItem, } from 'native-base';
 import {Rating,Card} from 'react-native-elements';
 class Task extends React.Component {
   constructor(props) {
     super(props);
   }
   
-
-  toggleChecked(index, task, checked, star, deleted) {
+  toggleChecked(index,uuid, task, checked, star, deleted) {
     fetch('http://34.78.202.51:8888/tasks/' + index, {
       method: 'post',
       headers: {
@@ -16,6 +15,7 @@ class Task extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        id:uuid,
         task: task,
         checked: !checked,
         star: star,
@@ -24,7 +24,7 @@ class Task extends React.Component {
     }).then(() => this.props.fetchAgain());
   }
   
-  toggleStar(index, task, checked, star, deleted) {
+  toggleStar(index,uuid, task, checked, star, deleted) {
     fetch('http://34.78.202.51:8888/tasks/' + index, {
       method: 'post',
       headers: {
@@ -32,6 +32,7 @@ class Task extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        id:uuid,
         task: task,
         checked: checked,
         star: !star,
@@ -40,7 +41,7 @@ class Task extends React.Component {
     }).then(() => this.props.fetchAgain());
   }
 
-  deleteTask(index, task, checked, star, deleted) {
+  deleteTask(index,uuid, task, checked, star, deleted) {
     fetch('http://34.78.202.51:8888/tasks/' + index, {
       method: 'post',
       headers: {
@@ -48,6 +49,7 @@ class Task extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        id:uuid,
         task: task,
         checked: checked,
         star: star,
@@ -63,13 +65,14 @@ class Task extends React.Component {
           <ListItem style={{borderColor: 'rgb(243, 171, 51)'}}>
             <Rating
               type="custom"
-              startingValue={this.props.star}
+              startingValue={this.props.star ? 1 : 0}
               ratingCount={1}
               imageSize={22}
               style={styles.rating}
               onFinishRating={() =>
                 this.toggleStar(
                   this.props.id,
+                  this.props.uuid,
                   this.props.task,
                   this.props.checked,
                   this.props.star,
@@ -85,6 +88,7 @@ class Task extends React.Component {
               onPress={() =>
                 this.toggleChecked(
                   this.props.id,
+                  this.props.uuid,
                   this.props.task,
                   this.props.checked,
                   this.props.star,
@@ -98,6 +102,7 @@ class Task extends React.Component {
               onPress={() => {
                 this.deleteTask(
                   this.props.id,
+                  this.props.uuid,
                   this.props.task,
                   this.props.checked,
                   this.props.star,

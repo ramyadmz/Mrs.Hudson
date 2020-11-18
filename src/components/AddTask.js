@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Icon} from 'native-base';
+import UUIDGenerator from 'react-native-uuid-generator';
 
 class addTask extends React.Component {
   state = {
@@ -14,26 +15,30 @@ class addTask extends React.Component {
   };
   addTask() {
     if (this.state.currentTask.length != 0) {
-      const text = this.state.currentTask;
-      this.setState({currentTask: ''});
-      this.props.toggleLoading();
+      UUIDGenerator.getRandomUUID().then((uuid) => {
+        const text = this.state.currentTask;
+        const id = uuid;
+        this.setState({currentTask: ''});
+        this.props.toggleLoading();
 
-      fetch('http://34.78.202.51:8888/tasks', {
-        method: 'post',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          task: text,
-          checked: false,
-          deleted: false,
-          star: false,
-        }),
-      })
-        .catch((error) => console.error(error))
-        .then(() => this.props.toggleLoading())
-        .finally(() => this.props.fetchAgain());
+        fetch('http://34.78.202.51:8888/tasks', {
+          method: 'post',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id:id,
+            task: text,
+            checked: false,
+            deleted: false,
+            star: false,
+          }),
+        })
+          .catch((error) => console.error(error))
+          .then(() => this.props.toggleLoading())
+          .finally(() => this.props.fetchAgain());
+      });
     }
   }
   render() {
@@ -66,8 +71,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#dcd9c8',
     fontFamily: 'Handlee-Regular',
     marginTop: 5,
-    flexDirection:'row',
-    justifyContent:'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   textInput: {
     fontFamily: 'Handlee-Regular',
@@ -79,7 +84,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     paddingLeft: 10,
     margin: 5,
-    flex:0.8
+    flex: 0.8,
   },
   addBtn: {
     fontFamily: 'Handlee-Regular',
