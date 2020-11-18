@@ -1,31 +1,28 @@
 import React from 'react';
-import {
-  StyleSheet,
-  TextInput,
-  Image,
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  ActivityIndicator,
-} from 'react-native';
-import {Container, Header, Right,Body,Title, Left, Button, Icon} from 'native-base';
-import Task from './Task';
+import {StyleSheet, View} from 'react-native';
+import {Container} from 'native-base';
+import AddTask from './AddTask';
+import NavBar from './NavBar';
+import Logo from './Logo';
+import TaskList from './TaskList';
+import {Header, Right, Body, Title, Left, Button, Icon} from 'native-base';
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.fetchTasks = this.fetchTasks.bind(this);
+    this.toggleLoading = this.toggleLoading.bind(this);
   }
   state = {
+    isLoading: false,
     data: [],
-    isLoading: true,
-    currentTask: '',
-    showLastLTask: false,
     metaData: false,
   };
+  toggleLoading() {
+    this.setState({isLoading: !this.state.isLoading});
+  }
   fetchTasks() {
-    this.setState({isLoading: true});
+    this.toggleLoading();
     fetch('http://34.78.202.51:8888/tasks')
       .then((response) => response.json())
       .then((json) => {
@@ -33,160 +30,38 @@ class Home extends React.Component {
       })
       .catch((error) => console.error(error))
       .finally(() => {
-        this.setState({isLoading: false});
+        this.toggleLoading();
       });
   }
   componentDidMount() {
     this.fetchTasks();
   }
-  addTask() {
-    if (this.state.currentTask.length != 0) {
-      const text = this.state.currentTask;
-      this.setState({currentTask: ''});
 
-      fetch('http://34.78.202.51:8888/tasks', {
-        method: 'post',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          task: text,
-          checked: false,
-          deleted: false,
-          star: false,
-        }),
-      })
-        .then(() => this.fetchTasks())
-        .then(() => this.setState({isLoading: true}));
-    }
-  }
   render() {
     return (
-      <Container>
-        <Header style={styles.header}>
-          <Left style={{flex:1}}>
-            <Button hasText transparent backgroundColor="#350245">
-            <Icon  style={styles.NavIcon} name="home"></Icon>
-            </Button>
-          </Left>
-          <Body style={{flex:1}}>
-            <Title style={styles.headerTitle}>Mrs.Hudson</Title>
-          </Body>
-          <Right style={{flex:1}}>
-            <Button hasText transparent backgroundColor="#350245" onPress={() => this.fetchTasks()}>
-              <Icon  style={styles.NavIcon} name="refresh"></Icon>
-            </Button>
-          </Right>
-        </Header>
-        <View style={styles.content}>
-          <View style={styles.LogoSection}>
-            <Image
-              style={styles.logo}
-              source={require('./../../assets/images/Logo.jpg')}
-            />
-          </View>
-          <View style={styles.AddSection}>
-            <TextInput
-              placeholder="What needs to be done?"
-              placeholderTextColor="gray"
-              style={styles.textInput}
-              onChangeText={(text) => {
-                this.setState({currentTask: text});
-              }}
-              onSubmitEditing={(e) => {
-                this.addTask();
-              }}
-              value={this.state.currentTask}></TextInput>
-            <TouchableOpacity
-              onPress={() => {
-                this.addTask();
-              }}>
-                <Icon  style={styles.addBtn} name="add"></Icon>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.ListSection}>
-            <View>
-              {this.state.isLoading ? (
-                <ActivityIndicator size="large" color="#350245" />
-              ) : (
-                <FlatList
-                  refreshing={true}
-                  extraData={this.state.metaData}
-                  inverted={true}
-                  data={this.state.data}
-                  renderItem={({item, index}) => (
-                    <Task
-                      task={item.task}
-                      checked={item.checked}
-                      star={item.star}
-                      deleted={item.deleted}
-                      id={index}
-                      fetchAgain={this.fetchTasks}
-                    />
-                  )}
-                />
-              )}
-            </View>
-          </View>
-        </View>
+      <Container style={styles.container}>
+        
+          <NavBar fetchAgain={this.fetchTasks}></NavBar>
+          <Logo></Logo>
+          <AddTask
+            fetchAgain={this.fetchTasks}
+            toggleLoading={this.toggleLoading}></AddTask>
+          <TaskList
+            isLoading={this.state.isLoading}
+            data={this.state.data}
+            metaData={this.state.metaData}
+            fetchAgain={this.fetchTasks}></TaskList>
       </Container>
     );
   }
 }
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#350245',
-  },
-  headerTitle:{
-    fontFamily: 'HomemadeApple-Regular',
-    fontSize:24,
-    color:'gold'
+  container: {
+    backgroundColor: '#dcd9c8',
+    fontFamily: 'Handlee-Regular',
+    alignItems:'center'
 
   },
-  NavIcon: {
-    fontSize: 25,
-    color: 'ivory',
-  },
-  content: {
-    paddingTop: 10,
-    fontFamily: 'Handlee-Regular',
-    flex: 1,
-    alignItems: 'center',
-    flexDirection: 'column',
-    backgroundColor: '#dcd9c8',
-  },
-  AddSection: {
-    fontFamily: 'Handlee-Regular',
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    alignContent: 'center',
-    marginTop: 10,
-  },
-  textInput: {
-    fontFamily: 'Handlee-Regular',
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: 'gray',
-    padding: 5,
-    fontSize: 24,
-    borderRadius: 4,
-    paddingLeft: 10,
-    margin: 5,
-  },
-  addBtn: {
-    fontFamily: 'Handlee-Regular',
-    margin: 5,
-    padding: 8,
-    color: 'ivory',
-    backgroundColor: '#31d068',
-    borderRadius: 4,
-    fontSize: 20,
-  },
-  ListSection: {
-    flexDirection: 'column',
-    width: '95%',
-    flex: 1,
-  },
+  
 });
 export default Home;
