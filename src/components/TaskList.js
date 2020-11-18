@@ -23,7 +23,7 @@ class TaskList extends React.Component {
             refreshing={true}
             extraData={this.props.metaData}
             inverted={true}
-            data={this.props.data}
+            data={this.props.data.reverse()}
             renderItem={({item, index}) => (
               <Task
                 id={index}
