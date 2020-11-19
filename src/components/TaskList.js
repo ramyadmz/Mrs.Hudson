@@ -2,14 +2,14 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  ScrollView,
   FlatList,
   ActivityIndicator,
 } from 'react-native';
 import Task from './Task';
 
 class TaskList extends React.Component {
-  render() {
+  
+    render() {
     return (
       <View style={styles.ListSection}>
         {this.props.isLoading ? (
@@ -22,8 +22,7 @@ class TaskList extends React.Component {
           <FlatList
             refreshing={true}
             extraData={this.props.metaData}
-            inverted={true}
-            data={this.props.data.reverse()}
+            data={this.props.data}
             renderItem={({item, index}) => (
               <Task
                 id={index}
@@ -33,9 +32,13 @@ class TaskList extends React.Component {
                 star={item.star}
                 deleted={item.deleted}
                 fetchAgain={this.props.fetchAgain}
+                filter={this.props.filter}
+                addTaskCount={this.props.addTaskCount}
+                subtractTaskCount={this.props.subtractTaskCount}
+                
               />
             )}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item) => item.id}
             
           />
         )}

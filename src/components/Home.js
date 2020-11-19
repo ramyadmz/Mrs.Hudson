@@ -5,21 +5,37 @@ import AddTask from './AddTask';
 import NavBar from './NavBar';
 import Logo from './Logo';
 import TaskList from './TaskList';
-import {Header, Right, Body, Title, Left, Button, Icon} from 'native-base';
-
+import TaskFilter from './TaskFilter';
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.fetchTasks = this.fetchTasks.bind(this);
     this.toggleLoading = this.toggleLoading.bind(this);
+    this.addTaskCount = this.addTaskCount.bind(this);
+    this.subtractTaskCount = this.subtractTaskCount.bind(this);
+    this.changeFilter = this.changeFilter.bind(this);
   }
   state = {
     isLoading: false,
     data: [],
     metaData: false,
+    taskCount: 0,
+    filter: '',
   };
   toggleLoading() {
     this.setState({isLoading: !this.state.isLoading});
+  }
+
+  changeFilter(filter) {
+    this.setState({filter: filter});
+    this.fetchTasks();
+  }
+
+  addTaskCount() {
+    this.setState({taskCount: this.state.taskCount + 1});
+  }
+  subtractTaskCount() {
+    this.setState({taskCount: this.state.taskCount - 1});
   }
   fetchTasks() {
     this.toggleLoading();
@@ -34,29 +50,33 @@ class Home extends React.Component {
       });
   }
   componentDidMount() {
-    this.fetchTasks();
+    
+    this.fetchTasks()
+    
+    
   }
-  componentWillUnmount() {
-    // fix Warning: Can't perform a React state update on an unmounted component
-    this.setState = (state,callback)=>{
-        return;
-    };
-}
 
   render() {
     return (
+      
       <Container style={styles.container}>
-        
-          <NavBar fetchAgain={this.fetchTasks}></NavBar>
-          <Logo></Logo>
-          <AddTask
-            fetchAgain={this.fetchTasks}
-            toggleLoading={this.toggleLoading}></AddTask>
-          <TaskList
-            isLoading={this.state.isLoading}
-            data={this.state.data}
-            metaData={this.state.metaData}
-            fetchAgain={this.fetchTasks}></TaskList>
+        <NavBar fetchAgain={this.fetchTasks}></NavBar>
+        <Logo></Logo>
+        <AddTask
+          fetchAgain={this.fetchTasks}
+          toggleLoading={this.toggleLoading}
+          addTaskCount={this.addTaskCount}></AddTask>
+        <TaskList
+          isLoading={this.state.isLoading}
+          filter={this.state.filter}
+          data={this.state.data}
+          metaData={this.state.metaData}
+          fetchAgain={this.fetchTasks}
+          addTaskCount={this.addTaskCount}
+          subtractTaskCount={this.subtractTaskCount}></TaskList>
+        <TaskFilter
+          changeFilter={this.changeFilter}
+          taskCount={this.state.taskCount}></TaskFilter>
       </Container>
     );
   }
@@ -65,9 +85,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#dcd9c8',
     fontFamily: 'Handlee-Regular',
-    alignItems:'center'
-
+    alignItems: 'center',
   },
-  
 });
 export default Home;

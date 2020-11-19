@@ -37,6 +37,7 @@ class addTask extends React.Component {
         })
           .catch((error) => console.error(error))
           .then(() => this.props.toggleLoading())
+          .then(() => this.props.addTaskCount())
           .finally(() => this.props.fetchAgain());
       });
     }
