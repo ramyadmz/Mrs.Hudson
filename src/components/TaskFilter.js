@@ -17,8 +17,9 @@ class TaskFilter extends React.Component {
             {this.props.taskCount == 1 ? 'item' : 'items'} left{' '}
           </Text>
         </View>
-        {this.state.filter.map((item) => (
+        {this.state.filter.map((item, index) => (
           <TouchableOpacity
+            key={index}
             style={styles.filterItem}
             onPress={() => {
               this.props.changeFilter(item);

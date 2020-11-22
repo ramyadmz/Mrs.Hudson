@@ -25,7 +25,7 @@ class TaskList extends React.Component {
             data={this.props.data}
             renderItem={({item, index}) => (
               <Task
-                id={index}
+                key={index}
                 uuid={item.id}
                 task={item.task}
                 checked={item.checked}

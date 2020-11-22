@@ -21,6 +21,7 @@ class Home extends React.Component {
     metaData: false,
     taskCount: 0,
     filter: '',
+    initialTaskCounting:true
   };
   toggleLoading() {
     this.setState({isLoading: !this.state.isLoading});
@@ -45,13 +46,20 @@ class Home extends React.Component {
         this.setState({data: json.tasks});
       })
       .catch((error) => console.error(error))
+      
       .finally(() => {
         this.toggleLoading();
+        this.state.data.forEach((element) => {
+          (this.state.initialTaskCounting && !element.deleted && !element.checked  ? this.addTaskCount():'') 
+        })
+        this.setState({initialTaskCounting:false})
+        
       });
   }
   componentDidMount() {
     
-    this.fetchTasks()
+    this.fetchTasks();
+    
     
     
   }
