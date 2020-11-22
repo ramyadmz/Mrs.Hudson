@@ -1,34 +1,31 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {Text, Button, View} from 'native-base';
-class TaskFilter extends React.Component {
-  state = {
-    filter: ['All', 'Active', 'Completed'],
-    selectedItem: 'All',
-  };
+import {Text, View} from 'native-base';
+import {connect} from "react-redux";
+import {changeFilter} from "./../redux/actions";
 
+class TaskFilter extends React.Component {
   render() {
     let activeButton = '';
     return (
       <View style={styles.filterBar}>
         <View style={styles.filterItem}>
           <Text style={styles.filterText}>
-            {this.props.taskCount}{' '}
-            {this.props.taskCount == 1 ? 'item' : 'items'} left{' '}
+            {this.props.taskInfo.taskCount > 1 ? this.props.taskInfo.taskCount + ' items left' : ( this.props.taskInfo.taskCount == 1 ?  'only one left' : 'nothing to do')}
           </Text>
         </View>
-        {this.state.filter.map((item, index) => (
+        {this.props.taskInfo.filter.map((item, index) => (
           <TouchableOpacity
             key={index}
             style={styles.filterItem}
             onPress={() => {
               this.props.changeFilter(item);
-              this.setState({selectedItem: item});
+              
             }}>
             <Text
               style={[
                 styles.filterText,
-                this.state.selectedItem == item ? styles.selected : '',
+                this.props.taskInfo.selectedFilter == item ? styles.selected : '',
               ]}>
               {item}
             </Text>
@@ -53,7 +50,7 @@ const styles = StyleSheet.create({
   },
   filterText: {
     fontFamily: 'Handlee-Regular',
-    fontSize: 20,
+    fontSize: 18,
     color: '#dcd9c8',
     textAlign:'center'
     
@@ -68,4 +65,20 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
   },
 });
-export default TaskFilter;
+
+const mapDispatchToProps = dispatch => {
+  return {
+      changeFilter : selectedFilter => {
+          dispatch(changeFilter(selectedFilter))
+      }
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+      taskInfo : state.taskInfo,
+      
+  }
+}
+
+export default connect(mapStateToProps , mapDispatchToProps)(TaskFilter);

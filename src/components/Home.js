@@ -6,6 +6,9 @@ import NavBar from './NavBar';
 import Logo from './Logo';
 import TaskList from './TaskList';
 import TaskFilter from './TaskFilter';
+import {connect, Provider} from 'react-redux';
+import store from './../redux/store';
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -13,23 +16,18 @@ class Home extends React.Component {
     this.toggleLoading = this.toggleLoading.bind(this);
     this.addTaskCount = this.addTaskCount.bind(this);
     this.subtractTaskCount = this.subtractTaskCount.bind(this);
-    this.changeFilter = this.changeFilter.bind(this);
+    
   }
   state = {
     isLoading: false,
     data: [],
     metaData: false,
     taskCount: 0,
-    filter: '',
-    initialTaskCounting:true
+
+    initialTaskCounting: true,
   };
   toggleLoading() {
     this.setState({isLoading: !this.state.isLoading});
-  }
-
-  changeFilter(filter) {
-    this.setState({filter: filter});
-    this.fetchTasks();
   }
 
   addTaskCount() {
@@ -46,46 +44,41 @@ class Home extends React.Component {
         this.setState({data: json.tasks});
       })
       .catch((error) => console.error(error))
-      
+
       .finally(() => {
         this.toggleLoading();
         this.state.data.forEach((element) => {
-          (this.state.initialTaskCounting && !element.deleted && !element.checked  ? this.addTaskCount():'') 
-        })
-        this.setState({initialTaskCounting:false})
-        
+          this.state.initialTaskCounting && !element.deleted && !element.checked
+            ? this.addTaskCount()
+            : '';
+        });
+        this.setState({initialTaskCounting: false});
       });
   }
   componentDidMount() {
-    
     this.fetchTasks();
-    
-    
-    
   }
 
   render() {
     return (
-      
-      <Container style={styles.container}>
-        <NavBar fetchAgain={this.fetchTasks}></NavBar>
-        <Logo></Logo>
-        <AddTask
-          fetchAgain={this.fetchTasks}
-          toggleLoading={this.toggleLoading}
-          addTaskCount={this.addTaskCount}></AddTask>
-        <TaskList
-          isLoading={this.state.isLoading}
-          filter={this.state.filter}
-          data={this.state.data}
-          metaData={this.state.metaData}
-          fetchAgain={this.fetchTasks}
-          addTaskCount={this.addTaskCount}
-          subtractTaskCount={this.subtractTaskCount}></TaskList>
-        <TaskFilter
-          changeFilter={this.changeFilter}
-          taskCount={this.state.taskCount}></TaskFilter>
-      </Container>
+      <Provider store={store}>
+        <Container style={styles.container}>
+          <NavBar fetchAgain={this.fetchTasks}></NavBar>
+          <Logo></Logo>
+          <AddTask
+            fetchAgain={this.fetchTasks}
+            toggleLoading={this.toggleLoading}
+            ></AddTask>
+          <TaskList
+            isLoading={this.state.isLoading}
+            data={this.state.data}
+            metaData={this.state.metaData}
+            fetchAgain={this.fetchTasks}
+            
+            subtractTaskCount={this.subtractTaskCount}></TaskList>
+          <TaskFilter></TaskFilter>
+        </Container>
+      </Provider>
     );
   }
 }

@@ -32,10 +32,6 @@ class TaskList extends React.Component {
                 star={item.star}
                 deleted={item.deleted}
                 fetchAgain={this.props.fetchAgain}
-                filter={this.props.filter}
-                addTaskCount={this.props.addTaskCount}
-                subtractTaskCount={this.props.subtractTaskCount}
-                
               />
             )}
             keyExtractor={(item) => item.id}

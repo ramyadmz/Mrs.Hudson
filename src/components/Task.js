@@ -2,6 +2,9 @@ import React from 'react';
 import {StyleSheet, Text,TouchableOpacity,} from 'react-native';
 import {CheckBox, ListItem,Icon } from 'native-base';
 import {Rating,Card} from 'react-native-elements';
+import {connect} from "react-redux";
+import {addTaskCount,subtractTaskCount} from "./../redux/actions";
+
 class Task extends React.Component {
   constructor(props) {
     super(props);
@@ -67,7 +70,7 @@ class Task extends React.Component {
   
 
   render() {
-    if (this.props.task && !this.props.deleted && (this.props.filter=='Completed'? this.props.checked : (this.props.filter=='Active'? !this.props.checked : true))  ) {
+    if (this.props.task && !this.props.deleted && (this.props.taskInfo.selectedFilter=='Completed'? this.props.checked : (this.props.taskInfo.selectedFilter=='Active'? !this.props.checked : true))  ) {
       return (
         <Card containerStyle={{padding: 0,margin:5,borderRadius: 10,backgroundColor: '#F7F8F8',}}>
           <ListItem style={{borderColor: 'rgb(243, 171, 51)'}}>
@@ -163,4 +166,22 @@ const styles = StyleSheet.create({
 
   }
 });
-export default Task;
+const mapDispatchToProps = dispatch => {
+  return {
+    addTaskCount : () => {
+          dispatch(addTaskCount())
+      },
+      subtractTaskCount : () => {
+        dispatch(subtractTaskCount())
+    },
+
+  }
+}
+const mapStateToProps = (state) => {
+  return {
+      taskInfo : state.taskInfo,
+      
+  }
+}
+
+export default connect(mapStateToProps ,mapDispatchToProps )(Task);

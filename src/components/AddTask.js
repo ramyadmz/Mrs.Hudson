@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import {Icon} from 'native-base';
 import UUIDGenerator from 'react-native-uuid-generator';
+import {connect} from "react-redux";
+import {addTaskCount} from "./../redux/actions";
 
 class addTask extends React.Component {
   state = {
@@ -97,4 +99,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
-export default addTask;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addTaskCount : () => {
+          dispatch(addTaskCount())
+      }
+  }
+}
+
+
+export default connect( null,mapDispatchToProps )(addTask);
