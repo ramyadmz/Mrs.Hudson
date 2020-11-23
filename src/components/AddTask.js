@@ -9,7 +9,7 @@ import {
 import {Icon} from 'native-base';
 import UUIDGenerator from 'react-native-uuid-generator';
 import {connect} from "react-redux";
-import {addTaskCount} from "./../redux/actions";
+import {addTaskCount,toggleLoading} from "./../redux/actions";
 
 class addTask extends React.Component {
   state = {
@@ -40,7 +40,7 @@ class addTask extends React.Component {
           .catch((error) => console.error(error))
           .then(() => this.props.toggleLoading())
           .then(() => this.props.addTaskCount())
-          .finally(() => this.props.fetchAgain());
+          .finally(() => this.props.fetchList());
       });
     }
   }
@@ -104,7 +104,10 @@ const mapDispatchToProps = dispatch => {
   return {
     addTaskCount : () => {
           dispatch(addTaskCount())
-      }
+      },
+      toggleLoading: () => {
+      dispatch(toggleLoading());
+    },
   }
 }
 

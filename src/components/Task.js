@@ -1,78 +1,97 @@
 import React from 'react';
-import {StyleSheet, Text,TouchableOpacity,} from 'react-native';
-import {CheckBox, ListItem,Icon } from 'native-base';
-import {Rating,Card} from 'react-native-elements';
-import {connect} from "react-redux";
-import {addTaskCount,subtractTaskCount} from "./../redux/actions";
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {CheckBox, ListItem, Icon} from 'native-base';
+import {Rating, Card} from 'react-native-elements';
+import {connect} from 'react-redux';
+import {addTaskCount, subtractTaskCount} from './../redux/actions';
 
 class Task extends React.Component {
   constructor(props) {
     super(props);
   }
-  
-  toggleChecked(index,uuid, task, checked, star, deleted) {
-    let lastCheckedStatus = checked
-    fetch('http://34.78.202.51:8888/tasks/' + index, {
+
+  toggleChecked(id, uuid, task, checked, star, deleted) {
+    
+    let lastCheckedStatus = checked;
+    
+    fetch('http://34.78.202.51:8888/tasks/' + id, {
       method: 'post',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id:uuid,
+        id: uuid,
         task: task,
         checked: !checked,
         star: star,
         deleted: deleted,
       }),
-    }).then(() => lastCheckedStatus ? this.props.addTaskCount() : this.props.subtractTaskCount()  )
-    .finally(() => this.props.fetchAgain() )
+    })
+    .catch((error) => console.error(error))
+      .then(() =>
+        lastCheckedStatus
+          ? this.props.addTaskCount()
+          : this.props.subtractTaskCount(),
+      )
+      .finally(() => this.props.fetchList());
   }
-  
-  toggleStar(index,uuid, task, checked, star, deleted) {
-    fetch('http://34.78.202.51:8888/tasks/' + index, {
+
+  toggleStar(id, uuid, task, checked, star, deleted) {
+    fetch('http://34.78.202.51:8888/tasks/' + id, {
       method: 'post',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id:uuid,
+        id: uuid,
         task: task,
         checked: checked,
         star: !star,
         deleted: deleted,
       }),
-    }).then(() => this.props.fetchAgain())
-    
+    }).then(() => this.props.fetchList());
   }
 
-  deleteTask(index,uuid, task, checked, star, deleted) {
-    let lastCheckedStatus = checked
-    fetch('http://34.78.202.51:8888/tasks/' + index, {
+  deleteTask(id, uuid, task, checked, star, deleted) {
+    let lastCheckedStatus = checked;
+    fetch('http://34.78.202.51:8888/tasks/' + id, {
       method: 'post',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id:uuid,
+        id: uuid,
         task: task,
         checked: checked,
         star: star,
         deleted: !deleted,
       }),
     })
-    .then(() => lastCheckedStatus ? '' : this.props.subtractTaskCount())
-    .finally(() => this.props.fetchAgain() )
+      .then(() => (lastCheckedStatus ? '' : this.props.subtractTaskCount()))
+      .finally(() => this.props.fetchList());
   }
 
-  
-
   render() {
-    if (this.props.task && !this.props.deleted && (this.props.taskInfo.selectedFilter=='Completed'? this.props.checked : (this.props.taskInfo.selectedFilter=='Active'? !this.props.checked : true))  ) {
+    if (
+      this.props.task &&
+      !this.props.deleted &&
+      (this.props.payload.selectedFilter == 'Completed'
+        ? this.props.checked
+        : this.props.payload.selectedFilter == 'Active'
+        ? !this.props.checked
+        : true)
+    ) {
       return (
-        <Card containerStyle={{padding: 0,margin:5,borderRadius: 10,backgroundColor: '#F7F8F8',}}>
+        <Card
+          containerStyle={{
+            padding: 0,
+            margin: 5,
+            borderRadius: 10,
+            backgroundColor: '#F7F8F8',
+          }}>
           <ListItem style={{borderColor: 'rgb(243, 171, 51)'}}>
             <Rating
               type="custom"
@@ -98,7 +117,7 @@ class Task extends React.Component {
               checkboxTickColor="gray"
               onPress={() =>
                 this.toggleChecked(
-                  this.props.key,
+                  this.props.id,
                   this.props.uuid,
                   this.props.task,
                   this.props.checked,
@@ -108,7 +127,10 @@ class Task extends React.Component {
               }
               style={styles.checkbox}
             />
-            <Text style={[styles.Label , this.props.checked ?  styles.checked : '' ,]}>{this.props.task}</Text>
+            <Text
+              style={[styles.Label, this.props.checked ? styles.checked : '']}>
+              {this.props.task}
+            </Text>
             <TouchableOpacity
               onPress={() => {
                 this.deleteTask(
@@ -119,7 +141,9 @@ class Task extends React.Component {
                   this.props.star,
                   this.props.deleted,
                 );
-              }} ><Icon style={styles.Delete} name="trash"></Icon></TouchableOpacity>
+              }}>
+              <Icon style={styles.Delete} name="trash"></Icon>
+            </TouchableOpacity>
           </ListItem>
         </Card>
       );
@@ -135,53 +159,48 @@ const styles = StyleSheet.create({
     marginLeft: 1,
   },
   Label: {
-    flex:1,
+    flex: 1,
     fontFamily: 'Handlee-Regular',
     color: 'rgba(0, 0, 0, 0.80)',
     paddingLeft: 5,
     fontSize: 20,
   },
-  checked:{
-    textDecorationLine:"line-through",
-    color:'gray',
+  checked: {
+    textDecorationLine: 'line-through',
+    color: 'gray',
     textShadowColor: 'rgba(0, 0, 0, 0.35)',
     textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 10
+    textShadowRadius: 10,
   },
-  
-  rating:{
-    backgroundColor: '#F7F8F8',
 
+  rating: {
+    backgroundColor: '#F7F8F8',
   },
-  Delete:{
+  Delete: {
     fontFamily: 'Handlee-Regular',
-    color:'red',
+    color: 'red',
     fontSize: 20,
-    paddingLeft:5,
-    marginLeft:10,
+    paddingLeft: 5,
+    marginLeft: 10,
     borderRadius: 1,
     borderLeftWidth: 0.3,
     borderLeftColor: 'gray',
-    
-
-  }
+  },
 });
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    addTaskCount : () => {
-          dispatch(addTaskCount())
-      },
-      subtractTaskCount : () => {
-        dispatch(subtractTaskCount())
+    addTaskCount: () => {
+      dispatch(addTaskCount());
     },
-
-  }
-}
+    subtractTaskCount: () => {
+      dispatch(subtractTaskCount());
+    },
+  };
+};
 const mapStateToProps = (state) => {
   return {
-      taskInfo : state.taskInfo,
-      
-  }
-}
+    payload: state.payload,
+  };
+};
 
-export default connect(mapStateToProps ,mapDispatchToProps )(Task);
+export default connect(mapStateToProps, mapDispatchToProps)(Task);

@@ -20,7 +20,7 @@ class NavBar extends React.Component {
             hasText
             transparent
             backgroundColor="#350245"
-            onPress={() => this.props.fetchAgain()}>
+            onPress={() => this.props.fetchList()}>
             <Icon style={styles.NavIcon} name="refresh"></Icon>
           </Button>
         </Right>

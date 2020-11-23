@@ -1,11 +1,7 @@
 import { combineReducers } from 'redux';
-import taskInfo from './taskReducer';
-
-
-
+import payload from './taskReducer';
 
 export default combineReducers({
-   
-    taskInfo
+    payload
 });
 

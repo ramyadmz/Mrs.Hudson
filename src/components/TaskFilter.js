@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {Text, View} from 'native-base';
-import {connect} from "react-redux";
-import {changeFilter} from "./../redux/actions";
+import {connect} from 'react-redux';
+import {changeFilter} from './../redux/actions';
 
 class TaskFilter extends React.Component {
   render() {
@@ -11,21 +11,26 @@ class TaskFilter extends React.Component {
       <View style={styles.filterBar}>
         <View style={styles.filterItem}>
           <Text style={styles.filterText}>
-            {this.props.taskInfo.taskCount > 1 ? this.props.taskInfo.taskCount + ' items left' : ( this.props.taskInfo.taskCount == 1 ?  'only one left' : 'nothing to do')}
+            {this.props.payload.taskCount > 1
+              ? this.props.payload.taskCount + ' items left'
+              : this.props.payload.taskCount == 1
+              ? 'only one left'
+              : 'nothing to do'}
           </Text>
         </View>
-        {this.props.taskInfo.filter.map((item, index) => (
+        {this.props.payload.filter.map((item, index) => (
           <TouchableOpacity
             key={index}
             style={styles.filterItem}
             onPress={() => {
               this.props.changeFilter(item);
-              
             }}>
             <Text
               style={[
                 styles.filterText,
-                this.props.taskInfo.selectedFilter == item ? styles.selected : '',
+                this.props.payload.selectedFilter == item
+                  ? styles.selected
+                  : '',
               ]}>
               {item}
             </Text>
@@ -39,21 +44,20 @@ const styles = StyleSheet.create({
   filterBar: {
     display: 'flex',
     fontFamily: 'Handlee-Regular',
-    flexDirection:'row',
+    flexDirection: 'row',
     backgroundColor: '#350245',
     paddingVertical: 10,
   },
- 
+
   filterItem: {
-    flex:1,
-    marginHorizontal:10
+    flex: 1,
+    marginHorizontal: 10,
   },
   filterText: {
     fontFamily: 'Handlee-Regular',
     fontSize: 18,
     color: '#dcd9c8',
-    textAlign:'center'
-    
+    textAlign: 'center',
   },
   selected: {
     textShadowColor: 'white',
@@ -66,19 +70,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-      changeFilter : selectedFilter => {
-          dispatch(changeFilter(selectedFilter))
-      }
-  }
-}
+    changeFilter: (selectedFilter) => {
+      dispatch(changeFilter(selectedFilter));
+    },
+  };
+};
 
 const mapStateToProps = (state) => {
   return {
-      taskInfo : state.taskInfo,
-      
-  }
-}
+    payload: state.payload,
+  };
+};
 
-export default connect(mapStateToProps , mapDispatchToProps)(TaskFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskFilter);
