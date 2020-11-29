@@ -14,7 +14,7 @@ class Task extends React.Component {
     
     let lastCheckedStatus = checked;
     
-    fetch('http://34.78.202.51:8888/tasks/' + id, {
+    fetch('http://34.78.202.51:8888/tasks/' + uuid, {
       method: 'post',
       headers: {
         Accept: 'application/json',
@@ -38,7 +38,7 @@ class Task extends React.Component {
   }
 
   toggleStar(id, uuid, task, checked, star, deleted) {
-    fetch('http://34.78.202.51:8888/tasks/' + id, {
+    fetch('http://34.78.202.51:8888/tasks/' + uuid, {
       method: 'post',
       headers: {
         Accept: 'application/json',
@@ -56,7 +56,7 @@ class Task extends React.Component {
 
   deleteTask(id, uuid, task, checked, star, deleted) {
     let lastCheckedStatus = checked;
-    fetch('http://34.78.202.51:8888/tasks/' + id, {
+    fetch('http://34.78.202.51:8888/tasks/' + uuid, {
       method: 'post',
       headers: {
         Accept: 'application/json',

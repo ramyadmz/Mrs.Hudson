@@ -14,6 +14,7 @@ import {addTaskCount,toggleLoading} from "./../redux/actions";
 class addTask extends React.Component {
   state = {
     currentTask: '',
+    person:['ramyad','ramtin','ali']
   };
   addTask() {
     if (this.state.currentTask.length != 0) {
