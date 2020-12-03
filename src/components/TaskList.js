@@ -1,5 +1,11 @@
 import React from 'react';
-import {StyleSheet, View, FlatList, ActivityIndicator} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import {connect} from 'react-redux';
 
 import Task from './Task';
@@ -7,7 +13,7 @@ import Task from './Task';
 class TaskList extends React.Component {
   render() {
     return (
-      <View style={styles.ListSection}>
+      <ScrollView style={styles.ListSection}>
         {this.props.payload.isLoading ? (
           <ActivityIndicator
             style={{marginTop: 20}}
@@ -17,7 +23,6 @@ class TaskList extends React.Component {
         ) : (
           <FlatList
             refreshing={true}
-            
             data={this.props.payload.data}
             renderItem={({item, index}) => (
               <Task
@@ -33,14 +38,15 @@ class TaskList extends React.Component {
             keyExtractor={(item) => item.id}
           />
         )}
-      </View>
+      </ScrollView>
     );
   }
 }
 const styles = StyleSheet.create({
   ListSection: {
     width: '95%',
-    flex: 1,
+    marginTop: -90,
+   marginBottom:43
   },
 });
 const mapStateToProps = (state) => {

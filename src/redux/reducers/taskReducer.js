@@ -4,7 +4,7 @@ import {
   SUBTRACT_TASK_COUNT,
   CHANGE_FILTER,
   TOGGLE_LOADING,
-  FETCH_TASKS
+  FETCH_TASKS,
 } from '../actions/type';
 const initialState = {
   isLoading: false,
@@ -12,7 +12,28 @@ const initialState = {
   taskCount: 0,
   filter: ['All', 'Active', 'Completed'],
   selectedFilter: 'All',
-  
+  people: [
+    {
+      id: 1,
+      name: 'Ramyad',
+      image: require('./../../../assets/images/avatars/Ramyad.png'),
+    },
+    {
+      id: 3,
+      name: 'Ramtin',
+      image: require('./../../../assets/images/avatars/Ramtin.png'),
+    },
+    {
+      id: 4,
+      name: 'Fatima',
+      image: require('./../../../assets/images/avatars/Fatima.png'),
+    },
+    {
+      id: 5,
+      name: 'Ali',
+      image: require('./../../../assets/images/avatars/Zoro.png'),
+    },
+  ],
 };
 export default payload = (state = initialState, action = {}) => {
   switch (action.type) {
@@ -45,11 +66,10 @@ export default payload = (state = initialState, action = {}) => {
         ...state,
         selectedFilter: action.selectedFilter,
       };
-      case FETCH_TASKS:
+    case FETCH_TASKS:
       return {
         ...state,
-        data:action.data
-        
+        data: action.data,
       };
 
     default:

@@ -11,9 +11,8 @@ class Task extends React.Component {
   }
 
   toggleChecked(id, uuid, task, checked, star, deleted) {
-    
     let lastCheckedStatus = checked;
-    
+
     fetch('http://34.78.202.51:8888/tasks/' + uuid, {
       method: 'post',
       headers: {
@@ -28,7 +27,7 @@ class Task extends React.Component {
         deleted: deleted,
       }),
     })
-    .catch((error) => console.error(error))
+      .catch((error) => console.error(error))
       .then(() =>
         lastCheckedStatus
           ? this.props.addTaskCount()

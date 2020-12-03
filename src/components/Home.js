@@ -9,7 +9,7 @@ import {
   resetTaskCount,
 } from './../redux/actions';
 
-import AddTask from './AddTask';
+import AddTask from './AddTask/AddTask.js';
 import NavBar from './NavBar';
 import Logo from './Logo';
 import TaskList from './TaskList';
@@ -20,7 +20,7 @@ class Home extends React.Component {
     super(props);
     this.fetchList = this.fetchList.bind(this);
   }
-  
+
   fetchList() {
     this.props.toggleLoading();
     fetch('http://34.78.202.51:8888/tasks')
@@ -48,8 +48,7 @@ class Home extends React.Component {
         <NavBar fetchList={this.fetchList}></NavBar>
         <Logo></Logo>
         <AddTask fetchList={this.fetchList}></AddTask>
-        <TaskList
-          fetchList={this.fetchList}></TaskList>
+        <TaskList fetchList={this.fetchList}></TaskList>
         <TaskFilter></TaskFilter>
       </Container>
     );

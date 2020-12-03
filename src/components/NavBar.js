@@ -1,21 +1,28 @@
 import React from 'react';
+import {StyleSheet} from 'react-native';
 import {
-  StyleSheet,
-} from 'react-native';
-import {Header, Right, Body, Title, Left, Button, Icon, View} from 'native-base';
+  Header,
+  Right,
+  Body,
+  Title,
+  Left,
+  Button,
+  Icon,
+  View,
+} from 'native-base';
 class NavBar extends React.Component {
   render() {
     return (
       <View style={styles.header}>
-        <Left >
+        <Left>
           <Button hasText transparent backgroundColor="#350245">
             <Icon style={styles.NavIcon} name="home"></Icon>
           </Button>
         </Left>
-        <Body >
+        <Body>
           <Title style={styles.headerTitle}>Mrs.Hudson</Title>
         </Body>
-        <Right >
+        <Right>
           <Button
             hasText
             transparent
@@ -31,7 +38,7 @@ class NavBar extends React.Component {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#350245',
-    flexDirection:'row'
+    flexDirection: 'row',
   },
   headerTitle: {
     fontFamily: 'HomemadeApple-Regular',

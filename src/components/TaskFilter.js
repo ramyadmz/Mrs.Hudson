@@ -47,6 +47,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#350245',
     paddingVertical: 10,
+    bottom: 0,
+    position: 'absolute',
   },
 
   filterItem: {
