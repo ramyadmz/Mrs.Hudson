@@ -95,6 +95,22 @@ const styles = StyleSheet.create({
     color: colors.iosBlue,
     fontWeight: 'bold',
   },
+  addBtn: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: '99%',
+    width: 45,
+    height: 45,
+    resizeMode: 'contain',
+  },
+  addIcon: {
+    padding: 10,
+    color: 'ivory',
+    backgroundColor: '#00c281',
+    borderRadius: 4,
+    fontSize: 30,
+  },
 });
 
 export default styles;

@@ -83,8 +83,10 @@ class addTask extends React.Component {
         const text = this.state.inputText;
         const id = uuid;
         this.setState({inputText: ''});
-        this.props.toggleLoading();
+        
         this.toggleTextField();
+        this.props.toggleLoading();
+      
 
         fetch('http://34.78.202.51:8888/tasks', {
           method: 'post',
@@ -104,6 +106,7 @@ class addTask extends React.Component {
           .catch((error) => console.error(error))
           .then(() => this.props.toggleLoading())
           .then(() => this.props.addTaskCount())
+          .then(()=>this.inputField.clear())
           .finally(() => this.props.fetchList());
       });
     }
@@ -116,9 +119,11 @@ class addTask extends React.Component {
           <View style={styles.inputFieldContainer}>
             {/* Text Input Field */}
             <MentionInput
+               
               reference={(comp) => {
                 this.inputField = comp;
               }}
+             
               placeholder="What needs to be done?"
               onChangeText={this.onChangeText}
               mentionData={this.state.mentionSuggestions}
