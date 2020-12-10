@@ -10,13 +10,16 @@ import {
   Icon,
   View,
 } from 'native-base';
+import { Actions } from 'react-native-router-flux';
+
 class NavBar extends React.Component {
   render() {
     return (
       <View style={styles.header}>
         <Left>
-          <Button hasText transparent backgroundColor="#350245">
-            <Icon style={styles.NavIcon} name="home"></Icon>
+          <Button hasText transparent backgroundColor="#350245" 
+          onPress={() => Actions.LoginLightBox()}>
+            <Icon style={styles.NavIcon} type="FontAwesome" name="sign-in" />
           </Button>
         </Left>
         <Body>
