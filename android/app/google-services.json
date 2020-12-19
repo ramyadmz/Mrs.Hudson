@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1009704509175",
+    "project_id": "mrshudson-98a44",
+    "storage_bucket": "mrshudson-98a44.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009704509175:android:23d8f334ad2dfa8cb9bdf2",
+        "android_client_info": {
+          "package_name": "com.mrshudson"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1009704509175-bl2m7s7fli9ucetp9a3pqbmmlnpasrsd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mrshudson",
+            "certificate_hash": "790c0aa1264898a0bbc4caacdee323eea2471380"
+          }
+        },
+        {
+          "client_id": "1009704509175-iontfnhtnei2n99lrrd9o06q2332pm2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9FGA9upmUnskxDzGbxUx5dpiTDwnpwzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1009704509175-iontfnhtnei2n99lrrd9o06q2332pm2o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
