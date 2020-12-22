@@ -4,7 +4,7 @@ import {Icon} from 'native-base';
 import UUIDGenerator from 'react-native-uuid-generator';
 import {connect} from 'react-redux';
 import {addTaskCount, toggleLoading} from './../../redux/actions';
-
+import DatePicker from 'react-native-date-picker'
 import styles from './styles.js';
 import MentionCell from './MentionCell';
 import MentionInput from './MentionInput';
@@ -21,6 +21,7 @@ const unique = (array) => {
 class addTask extends React.Component {
   state = {
     inputText: '',
+    date: new Date(),
     isMentionBoxShown: false,
     isInputFieldActive: false,
     mentionSuggestions: [],
@@ -133,7 +134,12 @@ class addTask extends React.Component {
               }}
               style={styles.inputField}
             />
+             <DatePicker
+      date={this.state.date}
+      onDateChange={date => this.setState({ date })}
+      mode={'time'}
 
+    />
             <TouchableOpacity
               style={styles.addBtn}
               onPress={() => {
@@ -141,6 +147,7 @@ class addTask extends React.Component {
               }}>
               <Icon style={styles.addIcon} name="add"></Icon>
             </TouchableOpacity>
+            <Text>{this.state.inputDate}</Text>
           </View>
         </View>
       </View>
