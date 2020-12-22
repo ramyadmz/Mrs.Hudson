@@ -9,6 +9,7 @@ buildscript {
         
     }
     repositories {
+        
         google()
         jcenter()
     }
@@ -24,6 +25,7 @@ allprojects {
     repositories {
         google()
         mavenLocal()
+        
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url("$rootDir/../node_modules/react-native/android")
@@ -35,6 +37,6 @@ allprojects {
 
         
         jcenter()
-        maven { url 'https://www.jitpack.io' }
+        maven { url 'http://www.jitpack.io' }
     }
 }
