@@ -2,7 +2,7 @@
 import React from 'react';
 import Home from './src/components/Home';
 import LoginLightBox from './src/components/lightBox/LoginLightBox';
-
+import DatePickerLightBox from './src/components/lightBox/DatePickerLightBox';
 import {Router, Scene, Lightbox,Drawer} from 'react-native-router-flux';
 import {Provider, connect} from 'react-redux';
 import store from './src/redux/store';
@@ -21,6 +21,7 @@ class App extends React.Component {
             </Scene>
 
             <Scene key="LoginLightBox" component={LoginLightBox} />
+            <Scene key="DatePickerLightBox" component={DatePickerLightBox} />
           </Lightbox>
         </RouterWithRedux>
       </Provider>

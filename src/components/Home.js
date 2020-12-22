@@ -48,7 +48,7 @@ class Home extends React.Component {
         <NavBar fetchList={this.fetchList}></NavBar>
         <Logo></Logo>
         <AddTask fetchList={this.fetchList}></AddTask>
-        
+        <TaskList fetchList={this.fetchList}></TaskList>
         <TaskFilter></TaskFilter>
       </Container>
     );

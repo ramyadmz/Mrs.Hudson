@@ -3,11 +3,13 @@ import {View, Text, TouchableOpacity, Keyboard} from 'react-native';
 import {Icon} from 'native-base';
 import UUIDGenerator from 'react-native-uuid-generator';
 import {connect} from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+
 import {addTaskCount, toggleLoading} from './../../redux/actions';
-import DatePicker from 'react-native-date-picker'
 import styles from './styles.js';
 import MentionCell from './MentionCell';
 import MentionInput from './MentionInput';
+
 
 /**
  * Uniqueness for Object.
@@ -134,12 +136,12 @@ class addTask extends React.Component {
               }}
               style={styles.inputField}
             />
-             <DatePicker
-      date={this.state.date}
-      onDateChange={date => this.setState({ date })}
-      mode={'time'}
-
-    />
+            
+            <TouchableOpacity
+              style={styles.dateBtn}
+              onPress={() => Actions.DatePickerLightBox()}>
+              <Icon style={styles.dateIcon} name="calendar"></Icon>
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.addBtn}
               onPress={() => {
@@ -147,7 +149,6 @@ class addTask extends React.Component {
               }}>
               <Icon style={styles.addIcon} name="add"></Icon>
             </TouchableOpacity>
-            <Text>{this.state.inputDate}</Text>
           </View>
         </View>
       </View>

@@ -6,8 +6,8 @@ import {getWidthRatio} from './utils/ui';
 const styles = StyleSheet.create({
   mainContainer: {
     marginTop: 10,
-    width: getWidthRatio(80),
-    marginRight: getWidthRatio(11),
+    width: getWidthRatio(75),
+    
   },
   subContainer: {},
   inputFieldContainer: {
@@ -48,6 +48,23 @@ const styles = StyleSheet.create({
     color: colors.iosBlue,
     fontWeight: 'bold',
   },
+  dateBtn: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: '-14%',
+    width: 45,
+    height: 45,
+    resizeMode: 'contain',
+  },
+  dateIcon: {
+    
+    padding: 6,
+    color: 'ivory',
+    backgroundColor: '#9363b1',
+    borderRadius: 4,
+    fontSize: 36,
+  },
   addBtn: {
     position: 'absolute',
     top: 0,
@@ -58,11 +75,11 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   addIcon: {
-    padding: 10,
+    padding: 6,
     color: 'ivory',
     backgroundColor: '#00c281',
     borderRadius: 4,
-    fontSize: 30,
+    fontSize: 36,
   },
 });
 
