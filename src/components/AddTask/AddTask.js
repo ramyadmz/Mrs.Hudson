@@ -85,6 +85,10 @@ class addTask extends React.Component {
       UUIDGenerator.getRandomUUID().then((uuid) => {
         const text = this.state.inputText;
         const id = uuid;
+        const date = this.props.payload.selectedDateTime.toDateString()
+        const time = this.props.payload.selectedDateTime.toLocaleTimeString().slice(0, -3)
+       
+        
         this.setState({inputText: ''});
         
         this.toggleTextField();
@@ -99,11 +103,13 @@ class addTask extends React.Component {
           },
           body: JSON.stringify({
             id: id,
-            task: text,
+            task: 'On '+ date + ' at '+ time + ' '+ text,
             checked: false,
             deleted: false,
             star: false,
             mentions: this.state.mentionSuggestions,
+            date: date,
+            time: time
           }),
         })
           .catch((error) => console.error(error))
@@ -119,6 +125,7 @@ class addTask extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <View style={styles.subContainer}>
+          
           <View style={styles.inputFieldContainer}>
             {/* Text Input Field */}
             <MentionInput
@@ -142,13 +149,14 @@ class addTask extends React.Component {
               onPress={() => Actions.DatePickerLightBox()}>
               <Icon style={styles.dateIcon} name="calendar"></Icon>
             </TouchableOpacity>
-            <TouchableOpacity
+            <TouchableOpacity 
               style={styles.addBtn}
               onPress={() => {
                 this.addTask();
-              }}>
+              }}> 
               <Icon style={styles.addIcon} name="add"></Icon>
             </TouchableOpacity>
+           
           </View>
         </View>
       </View>

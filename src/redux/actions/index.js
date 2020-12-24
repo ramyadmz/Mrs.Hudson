@@ -5,6 +5,7 @@ import {
   SUBTRACT_TASK_COUNT,
   TOGGLE_LOADING,
   FETCH_TASKS,
+  SET_DATE_TIME,
 } from './type';
 let datatemp = [];
 
@@ -23,6 +24,10 @@ export const toggleLoading = () => ({
 export const changeFilter = (selectedFilter) => ({
   type: CHANGE_FILTER,
   selectedFilter: selectedFilter,
+});
+export const setDateTime = (selectedDateTime) => ({
+  type: SET_DATE_TIME,
+  selectedDateTime: selectedDateTime,
 });
 
 export const fetchTasks = (data) => ({

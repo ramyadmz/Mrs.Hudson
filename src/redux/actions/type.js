@@ -4,3 +4,5 @@ export const SUBTRACT_TASK_COUNT = 'SUBTRACT_TASK_COUNT';
 export const CHANGE_FILTER = 'CHANGE_FILTER';
 export const TOGGLE_LOADING = 'TOGGLE_LOADING';
 export const FETCH_TASKS = 'FETCH_TASKS';
+export const SET_DATE_TIME = 'SET_DATE_TIME';
+

@@ -5,6 +5,7 @@ import {
   CHANGE_FILTER,
   TOGGLE_LOADING,
   FETCH_TASKS,
+  SET_DATE_TIME
 } from '../actions/type';
 const initialState = {
   isLoading: false,
@@ -12,6 +13,7 @@ const initialState = {
   taskCount: 0,
   filter: ['All', 'Active', 'Completed'],
   selectedFilter: 'All',
+  selectedDateTime: new Date(),
   people: [
     {
       id: 1,
@@ -66,12 +68,16 @@ export default payload = (state = initialState, action = {}) => {
         ...state,
         selectedFilter: action.selectedFilter,
       };
+    case SET_DATE_TIME:
+      return {
+        ...state,
+        selectedDateTime: action.selectedDateTime,
+      };
     case FETCH_TASKS:
       return {
         ...state,
         data: action.data,
       };
-
     default:
       return state;
   }
