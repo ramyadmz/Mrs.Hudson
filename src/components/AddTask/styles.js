@@ -6,15 +6,19 @@ import {getWidthRatio} from './utils/ui';
 const styles = StyleSheet.create({
   mainContainer: {
     marginTop: 10,
-    width: getWidthRatio(75),
-    
+    flex:1,
+    alignSelf: 'flex-start',
+    flexDirection: 'column',
   },
-  subContainer: {},
+  subContainer: {
+  },
   inputFieldContainer: {
-    //************************* */
-    height: 150,
+    
+    flexDirection: 'row',
   },
-  inputField: {},
+  inputField: {
+
+    },
   overlappingButton: {},
   // Action Buttons
   actionButtonContainer: {
@@ -44,43 +48,32 @@ const styles = StyleSheet.create({
     color: colors.iosBlue,
     fontWeight: 'bold',
   },
-  hashTag: {
-    color: colors.iosBlue,
-    fontWeight: 'bold',
-  },
-  dateBtn: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: '-14%',
-    width: 45,
-    height: 45,
-    resizeMode: 'contain',
-  },
-  dateIcon: {
-    
-    padding: 6,
-    color: 'ivory',
-    backgroundColor: '#9363b1',
-    borderRadius: 4,
-    fontSize: 36,
-  },
+  
   addBtn: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: '99%',
-    width: 45,
-    height: 45,
-    resizeMode: 'contain',
   },
   addIcon: {
     padding: 6,
     color: 'ivory',
     backgroundColor: '#00c281',
     borderRadius: 4,
-    fontSize: 36,
+    fontSize: 38,
   },
+  suggestions:{
+    marginLeft: 10,
+    marginTop:5,
+    
+    flexDirection:'row',
+    fontFamily: 'Handlee-Regular',
+  },
+  suggestionTag:{
+    fontFamily: 'Handlee-Regular',
+    padding: 5,
+    marginLeft: 5,
+    color: 'ivory',
+    backgroundColor: 'gray',
+    borderRadius: 4,
+    fontSize: 14,
+  }
 });
 
 export default styles;

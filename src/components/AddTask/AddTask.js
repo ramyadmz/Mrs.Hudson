@@ -3,13 +3,13 @@ import {View, Text, TouchableOpacity, Keyboard} from 'react-native';
 import {Icon} from 'native-base';
 import UUIDGenerator from 'react-native-uuid-generator';
 import {connect} from 'react-redux';
-import { Actions } from 'react-native-router-flux';
+import {Actions} from 'react-native-router-flux';
 
 import {addTaskCount, toggleLoading} from './../../redux/actions';
 import styles from './styles.js';
 import MentionCell from './MentionCell';
 import MentionInput from './MentionInput';
-
+import _ from "lodash";
 
 /**
  * Uniqueness for Object.
@@ -21,6 +21,11 @@ const unique = (array) => {
 };
 
 class addTask extends React.Component {
+  constructor(props) {
+    super(props)
+    this.onChangeTextDelayed = _.debounce(this.onChangeText, 2000)
+  }
+
   state = {
     inputText: '',
     date: new Date(),
@@ -85,15 +90,15 @@ class addTask extends React.Component {
       UUIDGenerator.getRandomUUID().then((uuid) => {
         const text = this.state.inputText;
         const id = uuid;
-        const date = this.props.payload.selectedDateTime.toDateString()
-        const time = this.props.payload.selectedDateTime.toLocaleTimeString().slice(0, -3)
-       
-        
+        const date = this.props.payload.selectedDateTime.toDateString();
+        const time = this.props.payload.selectedDateTime
+          .toLocaleTimeString()
+          .slice(0, -3);
+
         this.setState({inputText: ''});
-        
+
         this.toggleTextField();
         this.props.toggleLoading();
-      
 
         fetch('http://34.78.202.51:8888/tasks', {
           method: 'post',
@@ -103,19 +108,19 @@ class addTask extends React.Component {
           },
           body: JSON.stringify({
             id: id,
-            task: 'On '+ date + ' at '+ time + ' '+ text,
+            task: 'On ' + date + ' at ' + time + ' ' + text,
             checked: false,
             deleted: false,
             star: false,
             mentions: this.state.mentionSuggestions,
             date: date,
-            time: time
+            time: time,
           }),
         })
           .catch((error) => console.error(error))
           .then(() => this.props.toggleLoading())
           .then(() => this.props.addTaskCount())
-          .then(()=>this.inputField.clear())
+          .then(() => this.inputField.clear())
           .finally(() => this.props.fetchList());
       });
     }
@@ -125,17 +130,15 @@ class addTask extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <View style={styles.subContainer}>
-          
+        
           <View style={styles.inputFieldContainer}>
             {/* Text Input Field */}
             <MentionInput
-               
               reference={(comp) => {
                 this.inputField = comp;
               }}
-             
-              placeholder="What needs to be done?"
-              onChangeText={this.onChangeText}
+              placeholder="What needs to be done ?"
+              onChangeText={this.onChangeTextDelayed}
               mentionData={this.state.mentionSuggestions}
               mentioningChangeText={this.mentioningChangeText}
               renderMentionCell={({item}) => {
@@ -143,21 +146,31 @@ class addTask extends React.Component {
               }}
               style={styles.inputField}
             />
-            
+
+           
             <TouchableOpacity
-              style={styles.dateBtn}
-              onPress={() => Actions.DatePickerLightBox()}>
-              <Icon style={styles.dateIcon} name="calendar"></Icon>
-            </TouchableOpacity>
-            <TouchableOpacity 
               style={styles.addBtn}
               onPress={() => {
                 this.addTask();
-              }}> 
+              }}>
               <Icon style={styles.addIcon} name="add"></Icon>
             </TouchableOpacity>
-           
           </View>
+          <View style={styles.suggestions}>
+          <TouchableOpacity
+          
+              onPress={() => Actions.DatePickerLightBox()}>
+              <Text style={styles.suggestionTag}>Set due date </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => Actions.DatePickerLightBox()}>
+              <Text style={styles.suggestionTag}>Set priority </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => Actions.DatePickerLightBox()}>
+              <Text style={styles.suggestionTag}>meeting </Text>
+            </TouchableOpacity>
+            </View>
         </View>
       </View>
     );

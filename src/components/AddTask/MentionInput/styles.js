@@ -40,6 +40,8 @@ const styles = StyleSheet.create({
   inputField: {
     // backgroundColor: 'red'
     // color: colors.transparent
+    width: getWidthRatio(80),
+
     fontFamily: 'Handlee-Regular',
     backgroundColor: 'white',
     borderWidth: 1,
