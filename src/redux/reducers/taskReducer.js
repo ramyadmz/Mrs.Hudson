@@ -5,7 +5,7 @@ import {
   CHANGE_FILTER,
   TOGGLE_LOADING,
   FETCH_TASKS,
-  SET_DATE_TIME
+  SET_DATE_TIME,
 } from '../actions/type';
 const initialState = {
   isLoading: false,
@@ -14,6 +14,9 @@ const initialState = {
   filter: ['All', 'Active', 'Completed'],
   selectedFilter: 'All',
   selectedDateTime: new Date(),
+  selectedDate: '',
+  selectedTime: '',
+
   people: [
     {
       id: 1,
@@ -72,6 +75,8 @@ export default payload = (state = initialState, action = {}) => {
       return {
         ...state,
         selectedDateTime: action.selectedDateTime,
+        selectedDate: action.selectedDateTime.toDateString(),
+        selectedTime: action.selectedDateTime.toLocaleTimeString().slice(0, -3),
       };
     case FETCH_TASKS:
       return {

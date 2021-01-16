@@ -9,7 +9,7 @@ import {addTaskCount, toggleLoading} from './../../redux/actions';
 import styles from './styles.js';
 import MentionCell from './MentionCell';
 import MentionInput from './MentionInput';
-import _ from "lodash";
+import _ from 'lodash';
 
 /**
  * Uniqueness for Object.
@@ -22,8 +22,8 @@ const unique = (array) => {
 
 class addTask extends React.Component {
   constructor(props) {
-    super(props)
-    this.onChangeTextDelayed = _.debounce(this.onChangeText, 2000)
+    super(props);
+    this.onChangeTextDelayed = _.debounce(this.onChangeText, 2000);
   }
 
   state = {
@@ -90,10 +90,8 @@ class addTask extends React.Component {
       UUIDGenerator.getRandomUUID().then((uuid) => {
         const text = this.state.inputText;
         const id = uuid;
-        const date = this.props.payload.selectedDateTime.toDateString();
-        const time = this.props.payload.selectedDateTime
-          .toLocaleTimeString()
-          .slice(0, -3);
+        const date = this.props.payload.selectedDate;
+        const time = this.props.payload.selectedTime;
 
         this.setState({inputText: ''});
 
@@ -108,7 +106,7 @@ class addTask extends React.Component {
           },
           body: JSON.stringify({
             id: id,
-            task: 'On ' + date + ' at ' + time + ' ' + text,
+            task: text,
             checked: false,
             deleted: false,
             star: false,
@@ -130,7 +128,6 @@ class addTask extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <View style={styles.subContainer}>
-        
           <View style={styles.inputFieldContainer}>
             {/* Text Input Field */}
             <MentionInput
@@ -147,7 +144,6 @@ class addTask extends React.Component {
               style={styles.inputField}
             />
 
-           
             <TouchableOpacity
               style={styles.addBtn}
               onPress={() => {
@@ -157,20 +153,27 @@ class addTask extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={styles.suggestions}>
-          <TouchableOpacity
-          
-              onPress={() => Actions.DatePickerLightBox()}>
-              <Text style={styles.suggestionTag}>Set due date </Text>
+            <TouchableOpacity onPress={() => Actions.DatePickerLightBox()}>
+              <Text
+                style={
+                  this.props.payload.selectedDate
+                    ? styles.suggestionTagOn
+                    : styles.suggestionTagOff
+                }>
+                {this.props.payload.selectedDate
+                  ? this.props.payload.selectedDate +
+                    '  ' +
+                    this.props.payload.selectedTime
+                  : 'Set due date'}{' '}
+              </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => Actions.DatePickerLightBox()}>
-              <Text style={styles.suggestionTag}>Set priority </Text>
+            <TouchableOpacity onPress={() => Actions.DatePickerLightBox()}>
+              <Text style={styles.suggestionTagOff}>Set priority </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => Actions.DatePickerLightBox()}>
-              <Text style={styles.suggestionTag}>meeting </Text>
+            <TouchableOpacity onPress={() => Actions.DatePickerLightBox()}>
+              <Text style={styles.suggestionTagOff}>meeting </Text>
             </TouchableOpacity>
-            </View>
+          </View>
         </View>
       </View>
     );

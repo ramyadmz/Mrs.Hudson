@@ -1,19 +1,19 @@
-import React, { Fragment } from 'react'
-import ParsedText from 'react-native-parsed-text'
-import { Keyboard, TextInput, TouchableOpacity } from 'react-native'
+import React, {Fragment} from 'react';
+import ParsedText from 'react-native-parsed-text';
+import {Keyboard, TextInput, TouchableOpacity} from 'react-native';
 
-import styles from './styles'
-import MentionBox, { HEIGHT } from './MentionBox'
+import styles from './styles';
+import MentionBox, {HEIGHT} from './MentionBox';
 
 class MentionInput extends React.PureComponent {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.mainData = []
+    this.mainData = [];
     this.cursorPostion = {
       start: 0,
-      end: 0
-    }
+      end: 0,
+    };
 
     this.state = {
       text: '',
@@ -23,29 +23,29 @@ class MentionInput extends React.PureComponent {
         top: 0,
         right: 0,
         width: 0,
-        height: HEIGHT
-      }
-    }
+        height: HEIGHT,
+      },
+    };
   }
 
   /**
    * Text field on change text event callback
    */
-  onChangeText = text => {
-    this.setState({ text })
-    this.props.onChangeText(text)
-    this.mentioningChangeText(text)
-  }
+  onChangeText = (text) => {
+    this.setState({text});
+    this.props.onChangeText(text);
+    this.mentioningChangeText(text);
+  };
 
-  composeData = words => {
-    let wordRelativeIndex = 0
+  composeData = (words) => {
+    let wordRelativeIndex = 0;
 
     return words.map((word, index) => {
-      const hasToMention = word.includes("@")
-      const wordAbsoluteIndex = index
-      const wordLength = word.length
+      const hasToMention = word.includes('@');
+      const wordAbsoluteIndex = index;
+      const wordLength = word.length;
       if (index > 0) {
-        wordRelativeIndex = wordRelativeIndex + words[index - 1].length + 1
+        wordRelativeIndex = wordRelativeIndex + words[index - 1].length + 1;
       }
 
       return {
@@ -53,116 +53,119 @@ class MentionInput extends React.PureComponent {
         wordLength,
         hasToMention,
         wordAbsoluteIndex,
-        wordRelativeIndex
-      }
-    })
-  }
+        wordRelativeIndex,
+      };
+    });
+  };
 
   checkIfCursorIsAtTheWord = (word, cursor) =>
     cursor.start >= word.wordRelativeIndex + 1 &&
-    cursor.start <= word.wordRelativeIndex + word.wordLength
+    cursor.start <= word.wordRelativeIndex + word.wordLength;
 
-  mentioningChangeText = text => {
-    this.splittedText = text.split(" ")
-    this.splittedTextCount = this.splittedText.length
-    this.mainData = this.composeData(this.splittedText)
+  mentioningChangeText = (text) => {
+    this.splittedText = text.split(' ');
+    this.splittedTextCount = this.splittedText.length;
+    this.mainData = this.composeData(this.splittedText);
 
-    this.mainData = this.mainData.map(item => {
+    this.mainData = this.mainData.map((item) => {
       return {
         ...item,
-        isCursorActive: this.checkIfCursorIsAtTheWord(item, this.cursorPostion)
-      }
-    })
+        isCursorActive: this.checkIfCursorIsAtTheWord(item, this.cursorPostion),
+      };
+    });
 
-    const wordAtCursor = this.mainData.find(item => item.isCursorActive)
+    const wordAtCursor = this.mainData.find((item) => item.isCursorActive);
 
     if (wordAtCursor && wordAtCursor.hasToMention) {
-      this.setState({ showMentionBox: true })
-      const words = wordAtCursor.word.split('@')
-      this.props.mentioningChangeText(words[words.length - 1])
+      this.setState({showMentionBox: true});
+      const words = wordAtCursor.word.split('@');
+      this.props.mentioningChangeText(words[words.length - 1]);
     } else {
-      this.setState({ showMentionBox: false })
+      this.setState({showMentionBox: false});
     }
 
-    this.lastCursorPosition = this.cursorPostion
-  }
+    this.lastCursorPosition = this.cursorPostion;
+  };
 
-  onSelectionChange = ({ nativeEvent }) => {
-    this.cursorPostion = nativeEvent.selection
-    this.mainData = this.mainData.map(item => {
+  onSelectionChange = ({nativeEvent}) => {
+    this.cursorPostion = nativeEvent.selection;
+    this.mainData = this.mainData.map((item) => {
       return {
         ...item,
-        isCursorActive: this.checkIfCursorIsAtTheWord(item, this.cursorPostion)
-      }
-    })
-  }
+        isCursorActive: this.checkIfCursorIsAtTheWord(item, this.cursorPostion),
+      };
+    });
+  };
 
-  onContentSizeChange = ({ nativeEvent }) => {
-    this.setState(oldState => ({
+  onContentSizeChange = ({nativeEvent}) => {
+    this.setState((oldState) => ({
       mentionBoxDimension: {
         ...oldState.mentionBoxDimension,
-        top: nativeEvent.contentSize.height + 10
-      }
-    }))
-  }
+        top: nativeEvent.contentSize.height + 10,
+      },
+    }));
+  };
 
-  onCellPress = item => {
-    this.setState({ showMentionBox: false })
-    this.mainData = this.mainData.map(data => {
+  onCellPress = (item) => {
+    this.setState({showMentionBox: false});
+    this.mainData = this.mainData.map((data) => {
       if (data.isCursorActive) {
-        const words = data.word.split('@')
-        const word = data.word.replace(`@${words[words.length - 1]}`, `@${item.name}`)
+        const words = data.word.split('@');
+        const word = data.word.replace(
+          `@${words[words.length - 1]}`,
+          `@${item.name}`,
+        );
 
         return {
           ...data,
-          word
-        }
+          word,
+        };
       }
 
-      return data
-    })
+      return data;
+    });
 
-    let combinedText = ''
+    let combinedText = '';
     this.mainData.forEach((word, index) => {
-      const space = index === 0 ? '' : ' '
-      combinedText = combinedText + space + word.word
-    })
-    this.setState({ text: combinedText })
-    this.props.onChangeText(combinedText)
-  }
+      const space = index === 0 ? '' : ' ';
+      combinedText = combinedText + space + word.word;
+    });
+    this.setState({text: combinedText});
+    this.props.onChangeText(combinedText);
+  };
 
   /**
    * Called by fake button that focuses or dismisses the text field.
    */
   toggleTextField = () => {
     this.setState(
-      prevState => ({
-        isInputFieldActive: !prevState.isInputFieldActive
+      (prevState) => ({
+        isInputFieldActive: !prevState.isInputFieldActive,
       }),
       () => {
         this.state.isInputFieldActive
           ? this.inputField.focus()
-          : Keyboard.dismiss()
-      }
-    )
-  }
+          : Keyboard.dismiss();
+      },
+    );
+  };
 
-  handleNamePress = text => {
+  handleNamePress = (text) => {
     // console.log('------xxxx', text)
-  }
+  };
 
   /**
    * On TextInput layout
    */
-  onLayout = ({ nativeEvent }) => {
+  onLayout = ({nativeEvent}) => {
     // console.log('onLayout', nativeEvent)
-    this.setState(oldState => ({
+    this.setState((oldState) => ({
       mentionBoxDimension: {
         ...oldState.mentionBoxDimension,
-        width: nativeEvent.layout.width
-      }
-    }))
-  }
+        width: nativeEvent.layout.width,
+      },
+    }));
+  };
 
   renderText(matchingString, matches) {
     let pattern = /@[A-Za-z0-9._-]*/;
@@ -176,31 +179,29 @@ class MentionInput extends React.PureComponent {
         <Fragment>
           <TextInput
             multiline
-            ref={comp => {
-              this.inputField = comp
-              this.props.reference(comp)
+            ref={(comp) => {
+              this.inputField = comp;
+              this.props.reference(comp);
             }}
             onLayout={this.onLayout}
             onChangeText={this.onChangeText}
             placeholder={this.props.placeholder}
             onSelectionChange={this.onSelectionChange}
             onContentSizeChange={this.onContentSizeChange}
-            style={[this.props.inputField, styles.inputField]}
-          >
+            style={[this.props.inputField, styles.inputField]}>
             <ParsedText
               style={styles.text}
               parse={[
                 {
                   pattern: /@[A-Za-z0-9._-]*/,
                   style: styles.username,
-                  onPress: this.handleNamePress
+                  onPress: this.handleNamePress,
                 },
                 {
                   pattern: /#(\w+)/,
-                  style: styles.hashTag
-                }
-              ]}
-            >
+                  style: styles.hashTag,
+                },
+              ]}>
               {this.state.text}
             </ParsedText>
           </TextInput>
@@ -209,16 +210,16 @@ class MentionInput extends React.PureComponent {
           <MentionBox
             data={this.props.mentionData}
             style={this.state.mentionBoxDimension}
-            renderCell={({ item, index }) => (
+            renderCell={({item, index}) => (
               <TouchableOpacity onPress={() => this.onCellPress(item)}>
-                {this.props.renderMentionCell({ item, index })}
+                {this.props.renderMentionCell({item, index})}
               </TouchableOpacity>
             )}
           />
         )}
       </Fragment>
-    )
+    );
   }
 }
 
-export default MentionInput 
+export default MentionInput;

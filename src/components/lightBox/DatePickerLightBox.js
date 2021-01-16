@@ -15,8 +15,7 @@ class DatePickerLightBox extends React.Component {
     return (
       <ScrollView style={{paddingHorizontal: 20, flex: 1}}>
         <DatePicker
-          placeholder={this.props.payload.selectedDateTime}
-          date={this.state.date}
+          date={this.props.payload.selectedDateTime}
           onDateChange={(date) => this.setState({date})}
           mode="datetime"
           confirmBtnText="Confirm"
@@ -25,14 +24,13 @@ class DatePickerLightBox extends React.Component {
         <Button
           onPress={() => {
             this.props.setDateTime(this.state.date);
-           
-          Actions.pop();
+
+            Actions.pop();
           }}
           rounded
           style={[styles.loginBtn, {backgroundColor: '#350245'}]}>
           <Icon type="FontAwesome" name="check" />
         </Button>
-        
       </ScrollView>
     );
   }
