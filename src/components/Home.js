@@ -7,13 +7,13 @@ import {
   addTaskCount,
   toggleLoading,
   resetTaskCount,
-} from './../redux/actions';
+} from '../redux/actions';
 
 import AddTask from './AddTask/AddTask.js';
-import NavBar from './NavBar';
-import Logo from './Logo';
+import NavBar from './header/NavBar';
+import Logo from './header/Logo';
 import TaskList from './TaskList';
-import TaskFilter from './TaskFilter';
+import TaskFilter from './footer/TaskFilter';
 
 class Home extends React.Component {
   constructor(props) {

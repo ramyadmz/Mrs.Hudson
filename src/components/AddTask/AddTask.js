@@ -92,6 +92,7 @@ class addTask extends React.Component {
         const id = uuid;
         const date = this.props.payload.selectedDate;
         const time = this.props.payload.selectedTime;
+        const priority = this.props.payload.selectedPriority;
 
         this.setState({inputText: ''});
 
@@ -109,10 +110,10 @@ class addTask extends React.Component {
             task: text,
             checked: false,
             deleted: false,
-            star: false,
             mentions: this.state.mentionSuggestions,
             date: date,
             time: time,
+            priority: priority,
           }),
         })
           .catch((error) => console.error(error))
@@ -167,10 +168,19 @@ class addTask extends React.Component {
                   : 'Set due date'}{' '}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => Actions.DatePickerLightBox()}>
-              <Text style={styles.suggestionTagOff}>Set priority </Text>
+            <TouchableOpacity onPress={() => Actions.SetPriorityLightBox()}>
+            <Text
+                style={
+                  this.props.payload.selectedPriority
+                    ? styles.suggestionTagOn
+                    : styles.suggestionTagOff
+                }>
+                {this.props.payload.selectedPriority
+                  ? this.props.payload.priorities[this.props.payload.selectedPriority]   
+                  : 'Set priority'}{' '}
+              </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => Actions.DatePickerLightBox()}>
+            <TouchableOpacity onPress={() => Actions.SetPriorityLightBox()}>
               <Text style={styles.suggestionTagOff}>meeting </Text>
             </TouchableOpacity>
           </View>

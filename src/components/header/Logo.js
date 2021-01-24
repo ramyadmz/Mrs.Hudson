@@ -6,7 +6,7 @@ class Logo extends React.Component {
       <View style={styles.LogoSection}>
         <Image
           style={styles.logo}
-          source={require('./../../assets/images/Logo.jpg')}
+          source={require('./../../../assets/images/Logo.jpg')}
         />
       </View>
     );

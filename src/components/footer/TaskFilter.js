@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {Text, View} from 'native-base';
 import {connect} from 'react-redux';
-import {changeFilter} from './../redux/actions';
+import {changeFilter} from './../../redux/actions';
 
 class TaskFilter extends React.Component {
   render() {

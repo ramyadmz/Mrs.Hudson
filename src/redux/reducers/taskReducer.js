@@ -6,6 +6,7 @@ import {
   TOGGLE_LOADING,
   FETCH_TASKS,
   SET_DATE_TIME,
+  SET_PRIORITY
 } from '../actions/type';
 const initialState = {
   isLoading: false,
@@ -16,6 +17,10 @@ const initialState = {
   selectedDateTime: new Date(),
   selectedDate: '',
   selectedTime: '',
+  selectedPriority: '',
+
+  priorities:['Low','Normal', 'High', 'Urgent'],
+
 
   people: [
     {
@@ -77,6 +82,11 @@ export default payload = (state = initialState, action = {}) => {
         selectedDateTime: action.selectedDateTime,
         selectedDate: action.selectedDateTime.toDateString(),
         selectedTime: action.selectedDateTime.toLocaleTimeString().slice(0, -3),
+      };
+      case SET_PRIORITY:
+      return {
+        ...state,
+        selectedPriority : action.selectedPriority,
       };
     case FETCH_TASKS:
       return {

@@ -5,4 +5,5 @@ export const CHANGE_FILTER = 'CHANGE_FILTER';
 export const TOGGLE_LOADING = 'TOGGLE_LOADING';
 export const FETCH_TASKS = 'FETCH_TASKS';
 export const SET_DATE_TIME = 'SET_DATE_TIME';
+export const SET_PRIORITY = 'SET_PRIORITY';
 

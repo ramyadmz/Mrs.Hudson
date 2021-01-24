@@ -6,6 +6,7 @@ import {
   TOGGLE_LOADING,
   FETCH_TASKS,
   SET_DATE_TIME,
+  SET_PRIORITY
 } from './type';
 let datatemp = [];
 
@@ -28,6 +29,10 @@ export const changeFilter = (selectedFilter) => ({
 export const setDateTime = (selectedDateTime) => ({
   type: SET_DATE_TIME,
   selectedDateTime: selectedDateTime,
+});
+export const setPriority = (selectedPriority) => ({
+  type: SET_PRIORITY,
+  selectedPriority: selectedPriority,
 });
 
 export const fetchTasks = (data) => ({

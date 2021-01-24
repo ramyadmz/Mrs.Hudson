@@ -29,8 +29,10 @@ class TaskList extends React.Component {
                 id={index}
                 uuid={item.id}
                 task={item.task}
+                date={item.date}
+                time={item.time}
+                priority={item.priority}
                 checked={item.checked}
-                star={item.star}
                 deleted={item.deleted}
                 fetchList={this.props.fetchList}
               />
