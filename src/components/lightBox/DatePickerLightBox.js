@@ -7,16 +7,24 @@ import {Actions} from 'react-native-router-flux';
 import {setDateTime} from './../../redux/actions';
 
 class DatePickerLightBox extends React.Component {
-  state = {
-    date: new Date(),
-  };
+  constructor(props) {
+    super(props);
+    this.state = {date: new Date()};
+
+    this.setDate = this.setDate.bind(this);
+  }
+
+  setDate(newDate) {
+    this.setState({date: newDate});
+  }
+  
 
   render() {
     return (
       <ScrollView style={{paddingHorizontal: 20, flex: 1}}>
         <DatePicker
           date={this.props.payload.selectedDateTime}
-          onDateChange={(date) => this.setState({date})}
+          onDateChange={this.setDate}
           mode="datetime"
           confirmBtnText="Confirm"
         />
